@@ -3,7 +3,7 @@ from .routers import jobs
 from .config import settings
 from fastapi.middleware.cors import CORSMiddleware
 from .jobs import models
-from .database import engine
+from .database.database import engine
 
 models.Base.metadata.create_all(bind=engine)
 
