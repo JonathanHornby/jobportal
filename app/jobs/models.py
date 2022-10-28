@@ -8,8 +8,8 @@ class Job(Base):
     __tablename__ = "jobs"
 
     id = Column(Integer, primary_key=True, nullable=False)
-    #poster_id = Column(Integer, ForeignKey("recruiters.id", ondelete="CASCADE"), nullable=False)
-    #poster = relationship("Recruiter")
+    poster_id = Column(Integer, ForeignKey("recruiters.id", ondelete="CASCADE"), nullable=False)
+    poster = relationship("Recruiter")
     created_at = Column(TIMESTAMP(timezone=True), nullable=False, server_default=text('now()'))
     status = Column(String, nullable=False, server_default='active')
     published = Column(Boolean, server_default='FALSE', nullable=False)

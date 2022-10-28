@@ -2,29 +2,32 @@ from pydantic import BaseModel
 from app.jobs.models import Job
 from datetime import date, datetime
 
-
-class JobOut(BaseModel):
+class JobBase(BaseModel):
     id: int
     poster_id: int
-    #poster = relationship("Recruiter")
     created_at: datetime
     status: str
     published: bool
+    title: str
+    industry: str
+    category: str
+    summary: str
+    salary_min: int
+    salary_max: int
+
+    class Config:
+        orm_mode = True
+
+class JobDetail(JobBase):
     product_type: int
     valid_duration: int
-    title: str
     company: str
     country: str
     state: str
     city: str
-    industry: str
-    category: str
     employment_type: str
     remote_status: str
-    salary_min: int
-    salary_max: int
     salary_currency: str
-    summary: str
     content: str
     contact_name: str
     contact_number: str
@@ -38,3 +41,6 @@ class JobOut(BaseModel):
 
     class Config:
         orm_mode = True
+
+class JobCreate(JobBase):
+    pass
