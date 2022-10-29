@@ -13,10 +13,13 @@ router = APIRouter(
 
 # TODO: set limit by settings
 #  change search to a search object
-@router.get("/", response_model=List[schemas.JobBase])
+@router.get("/", response_model=List[schemas.JobBasic])
 def get_jobs(db: Session = Depends(get_db), limit: int = 10, skip: int = 0, search: Optional[str] = ""):
     results = db.query(models.Job).limit(10).all()
 
+    if not results:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                            detail=f"No jobs found")
     return results
 
 @router.get("/{id}", response_model=schemas.JobDetail)
@@ -33,8 +36,10 @@ def get_job(id: int, db: Session = Depends(get_db)):
 def create_job(job: schemas.JobCreate, db: Session = Depends(get_db),
             recruiter_id: int = 1):
     new_job = models.Job(
-        recruiter_id = 1, **job.dict())
+        poster_id = 1, **job.dict())
 
     db.add(new_job)
     db.commit()
     db.refresh(new_job)
+
+    return new_job

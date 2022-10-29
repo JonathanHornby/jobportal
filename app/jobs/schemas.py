@@ -3,11 +3,6 @@ from app.jobs.models import Job
 from datetime import date, datetime
 
 class JobBase(BaseModel):
-    id: int
-    poster_id: int
-    created_at: datetime
-    status: str
-    published: bool
     title: str
     industry: str
     category: str
@@ -18,7 +13,14 @@ class JobBase(BaseModel):
     class Config:
         orm_mode = True
 
-class JobDetail(JobBase):
+class JobBasic(JobBase):
+    id: int
+    poster_id: int
+    created_at: datetime
+    status: str
+    published: bool
+
+class JobCreate(JobBase):
     product_type: int
     valid_duration: int
     company: str
@@ -34,7 +36,7 @@ class JobDetail(JobBase):
     perk_car: bool
     perk_visa: bool
     perk_relocation: bool
-    perk_days_week: bool
+    perk_days_week: int
     perk_phone: bool
     perk_laptop: bool
     perk_bonus: bool
@@ -42,5 +44,7 @@ class JobDetail(JobBase):
     class Config:
         orm_mode = True
 
-class JobCreate(JobBase):
-    pass
+class JobDetail(JobCreate, JobBasic):
+
+    class Config:
+        orm_mode = True
