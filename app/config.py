@@ -25,4 +25,12 @@ class Settings(BaseSettings):
     
     DATABASE_NAME: str = os.environ.get('DATABASE_NAME')
 
+
+    # OAUTH
+    SECRET_KEY: str = os.environ.get('SECRET_KEY')
+    
+    ALGORITHM: str = os.environ.get('ALGORITHM')
+    
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = os.environ.get('ACCESS_TOKEN_EXPIRE_MINUTES')
+
 settings = Settings()
