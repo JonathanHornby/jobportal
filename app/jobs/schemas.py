@@ -1,6 +1,5 @@
 from pydantic import BaseModel
-from app.jobs.models import Job
-from datetime import date, datetime
+from datetime import datetime
 
 class JobBase(BaseModel):
     title: str
