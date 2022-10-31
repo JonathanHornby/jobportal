@@ -4,7 +4,7 @@ from pydantic.types import conint
 from datetime import date, datetime
 from typing import Optional
 
-class SeekerLogin(BaseModel):
+class UserLogin(BaseModel):
     email: EmailStr
     password: str
 
