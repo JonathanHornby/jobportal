@@ -22,7 +22,7 @@ def get_users(db: Session = Depends(get_db), limit: int = 10, skip: int = 0, sea
 
 
 @router.get("/{id}", response_model=schemas.UserDetail)
-def get_users(id: int, db: Session = Depends(get_db)):
+def get_user(id: int, db: Session = Depends(get_db)):
     user = db.query(models.User).filter(models.User.id == id).first()
     
     if not user:
