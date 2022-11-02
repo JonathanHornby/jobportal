@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from .routers import jobs, auth
+from .routers import jobs, auth, users
 from .config import settings
 from fastapi.middleware.cors import CORSMiddleware
 from .recruiters import models
@@ -24,3 +24,4 @@ app.add_middleware(
 
 app.include_router(jobs.router)
 app.include_router(auth.router)
+app.include_router(users.router)
