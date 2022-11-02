@@ -12,15 +12,14 @@ class UserBase(BaseModel):
         orm_mode = True
     
 class UserDetail(UserBase):
-    username: str
-    email: str | None = None
-    name: str | None = None
-    disabled: bool | None = None
+    id: int
+    created_at: datetime
     
     class Config:
         orm_mode = True
 
 class UserCreate(UserBase):
+    password: str
 
     class Config:
         orm_mode = True
