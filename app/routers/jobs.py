@@ -5,6 +5,8 @@ from ..database.database import get_db
 from sqlalchemy.orm import Session
 from sqlalchemy import func
 from typing import List, Optional
+from ..auth.oauth2 import get_current_recruiter
+
 
 router = APIRouter(
     prefix="/jobs",
@@ -34,9 +36,9 @@ def get_job(id: int, db: Session = Depends(get_db)):
 # TODO: get recruiter_id from oauth
 @router.post("/", status_code=status.HTTP_201_CREATED, response_model=schemas.JobCreate)
 def create_job(job: schemas.JobCreate, db: Session = Depends(get_db),
-            recruiter_id: int = 1):
+            recruiter_id: int = Depends(get_current_recruiter)):
     new_job = models.Job(
-        poster_id = 1, **job.dict())
+        poster_id = recruiter_id, **job.dict())
 
     db.add(new_job)
     db.commit()

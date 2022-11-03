@@ -12,19 +12,17 @@ from . import schemas
 from ..users import models as user_models
 from ..recruiters import models as recruiter_models
 
-app = FastAPI()
-
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth")
 
 SECRET_KEY = settings.SECRET_KEY
 ALGORITHM = settings.ALGORITHM
 ACCESS_TOKEN_EXPIRE_MINUTES = settings.ACCESS_TOKEN_EXPIRE_MINUTES
-
+print("TESTING!!!!!!!!!!!!!!!!!!", settings.ACCESS_TOKEN_EXPIRE_MINUTES)
 
 def create_access_token(data: dict):
     to_encode = data.copy()
 
-    expire = datetime.utcnow() + timedelta(mintues=ACCESS_TOKEN_EXPIRE_MINUTES)
+    expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     to_encode.update({"exp": expire})
 
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
@@ -35,7 +33,8 @@ def create_access_token(data: dict):
 def verify_acccess_token(token: str, credentials_exception):
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        id: str = payload.get("user.id")
+        print(payload)
+        id: str = payload.get("user_id")
 
         if id is None:
             raise credentials_exception
@@ -47,6 +46,7 @@ def verify_acccess_token(token: str, credentials_exception):
 
 
 def get_current_user(token: str=Depends(oauth2_scheme), db: Session = Depends(get_db)):
+    """Verify login cerdentials and token - Return the current logged in user."""
     credentials_exception = HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
                                           detail=f'Could not validate credentials',
                                           headers={"WWW-Authenticate": "Bearer"})
@@ -55,8 +55,21 @@ def get_current_user(token: str=Depends(oauth2_scheme), db: Session = Depends(ge
 
     user = db.query(user_models.User).filter(user_models.User.id == token.id).first()
 
-    return user
+    return user.id
 
+
+def get_current_recruiter(token: str=Depends(oauth2_scheme), db: Session = Depends(get_db)):
+    """Verify login cerdentials and token - Return the current logged in recruiter."""
+    print("TESTING")
+    credentials_exception = HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
+                                          detail=f'Could not validate credentials',
+                                          headers={"WWW-Authenticate": "Bearer"})
+
+    token = verify_acccess_token(token, credentials_exception)
+
+    recruiter = db.query(recruiter_models.Recruiter).filter(recruiter_models.Recruiter.id == token.id).first()
+
+    return recruiter.id
 
 
 
