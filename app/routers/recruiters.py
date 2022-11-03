@@ -1,5 +1,6 @@
 from typing import List, Optional
 from fastapi import APIRouter, Depends, HTTPException, status
+from app import utils
 from app.database.database import get_db
 from ..recruiters import schemas, models
 from sqlalchemy.orm import Session
@@ -33,6 +34,9 @@ def get_recruiter(id: int, db: Session = Depends(get_db)):
 
 @router.post("/", status_code=status.HTTP_201_CREATED, response_model=schemas.RecruiterCreate)
 def create_recruiter(recruiter: schemas.RecruiterCreate, db: Session = Depends(get_db)):
+    
+    hashed_password = utils.hash(recruiter.password)
+    recruiter.password = hashed_password    
     
     new_recruiter = models.Recruiter(**recruiter.dict())
 
