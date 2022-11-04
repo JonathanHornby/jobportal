@@ -13,6 +13,7 @@ router = APIRouter(
     tags = ['Jobs']
 )
 
+
 # TODO: set limit by settings
 #  change search to a search object
 @router.get("/", response_model=List[schemas.JobBasic])
@@ -24,6 +25,7 @@ def get_jobs(db: Session = Depends(get_db), limit: int = 10, skip: int = 0, sear
                             detail=f"No jobs found")
     return results
 
+
 @router.get("/{id}", response_model=schemas.JobDetail)
 def get_job(id: int, db: Session = Depends(get_db)):
     job = db.query(models.Job).filter(models.Job.id == id).first()
@@ -33,12 +35,18 @@ def get_job(id: int, db: Session = Depends(get_db)):
                             detail=f"Job with id: {id} does not exist")
     return job
 
+
 # TODO: get recruiter_id from oauth
 @router.post("/", status_code=status.HTTP_201_CREATED, response_model=schemas.JobCreate)
 def create_job(job: schemas.JobCreate, db: Session = Depends(get_db),
             recruiter_id: int = Depends(get_current_recruiter)):
+
     new_job = models.Job(
         poster_id = recruiter_id, **job.dict())
+    
+    if not new_job:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                            detail=f"Not all details provided")
 
     db.add(new_job)
     db.commit()
@@ -46,11 +54,16 @@ def create_job(job: schemas.JobCreate, db: Session = Depends(get_db),
 
     return new_job
 
-@router.post("/apply/{id}", status_code=status.HTTP_201_CREATED, response_model=schemas.JobApplication)
+
+@router.post("/apply", status_code=status.HTTP_201_CREATED, response_model=schemas.JobApplication)
 def apply_job(job_application: schemas.JobApplication, db: Session = Depends(get_db),
               userid: int = Depends(get_current_user)):
-    pass
+
     new_application = models.JobApplication(user_id = userid, **job_application.dict())
+    
+    if not new_application:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                            detail=f"Not all details provided")
     
     db.add(new_application)
     db.commit()

@@ -55,7 +55,6 @@ class JobDetail(JobCreate, JobBasic):
 
 class JobApplication(BaseModel):
     recruiter_status: str
-    user_id: int
     job_id: int
     cv_path: str
     cover_letter_path: str

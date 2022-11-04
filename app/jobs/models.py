@@ -10,7 +10,7 @@ class Job(Base):
     id = Column(Integer, primary_key=True, nullable=False)
     poster_id = Column(Integer, ForeignKey("recruiters.id", ondelete="CASCADE"), nullable=False)
     poster = relationship("Recruiter")
-    applications = relationship("JobApplication")
+    # applications = relationship("JobApplication")
     created_at = Column(TIMESTAMP(timezone=True), nullable=False, server_default=text('now()'))
     status = Column(String, nullable=False, server_default='active')
     published = Column(Boolean, server_default='FALSE', nullable=False)
@@ -40,14 +40,14 @@ class Job(Base):
     perk_laptop = Column(Boolean, nullable=False, server_default=text('False'))
     perk_bonus = Column(Boolean, nullable=False, server_default=text('False'))
     
-class JobApplication:
+class JobApplication(Base):
     __tablename__ = 'job_applications'
     
-    created_at = Column(TIMESTAMP(timezone=True), nullable=False, server_default=text('now()')),
-    recruiter_status = Column(String, nullable=False, server_default='new'),
-    user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), primary_key=True, nullable=False),
-    job_id = Column(Integer, ForeignKey("jobs.id", ondelete="CASCADE"), primary_key=True, nullable=False),
-    cv_path = Column('String'),
+    user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), primary_key=True, nullable=False)
+    job_id = Column(Integer, ForeignKey("jobs.id", ondelete="CASCADE"), primary_key=True, nullable=False)
+    created_at = Column(TIMESTAMP(timezone=True), nullable=False, server_default=text('now()'))
+    recruiter_status = Column(String, nullable=False, server_default='new')
+    cv_path = Column(String)
     cover_letter_path = Column(String)
     
     

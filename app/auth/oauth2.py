@@ -33,7 +33,6 @@ def create_access_token(data: dict):
 def verify_acccess_token(token: str, credentials_exception):
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        print(payload)
         id: str = payload.get("user_id")
 
         if id is None:
@@ -60,7 +59,6 @@ def get_current_user(token: str=Depends(oauth2_scheme), db: Session = Depends(ge
 
 def get_current_recruiter(token: str=Depends(oauth2_scheme), db: Session = Depends(get_db)):
     """Verify login cerdentials and token - Return the current logged in recruiter."""
-    print("TESTING")
     credentials_exception = HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
                                           detail=f'Could not validate credentials',
                                           headers={"WWW-Authenticate": "Bearer"})
