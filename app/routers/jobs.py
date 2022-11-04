@@ -5,7 +5,7 @@ from ..database.database import get_db
 from sqlalchemy.orm import Session
 from sqlalchemy import func
 from typing import List, Optional
-from ..auth.oauth2 import get_current_recruiter
+from ..auth.oauth2 import get_current_recruiter, get_current_user
 
 
 router = APIRouter(
@@ -45,3 +45,15 @@ def create_job(job: schemas.JobCreate, db: Session = Depends(get_db),
     db.refresh(new_job)
 
     return new_job
+
+@router.post("/apply/{id}", status_code=status.HTTP_201_CREATED, response_model=schemas.JobApplication)
+def apply_job(job_application: schemas.JobApplication, db: Session = Depends(get_db),
+              userid: int = Depends(get_current_user)):
+    pass
+    new_application = models.JobApplication(user_id = userid, **job_application.dict())
+    
+    db.add(new_application)
+    db.commit()
+    db.refresh(new_application)
+    
+    return new_application

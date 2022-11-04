@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 from datetime import datetime
 
+
 class JobBase(BaseModel):
     title: str
     industry: str
@@ -12,12 +13,14 @@ class JobBase(BaseModel):
     class Config:
         orm_mode = True
 
+
 class JobBasic(JobBase):
     id: int
     poster_id: int
     created_at: datetime
     status: str
     published: bool
+
 
 class JobCreate(JobBase):
     product_type: int
@@ -43,7 +46,19 @@ class JobCreate(JobBase):
     class Config:
         orm_mode = True
 
+
 class JobDetail(JobCreate, JobBasic):
 
+    class Config:
+        orm_mode = True
+        
+
+class JobApplication(BaseModel):
+    recruiter_status: str
+    user_id: int
+    job_id: int
+    cv_path: str
+    cover_letter_path: str
+    
     class Config:
         orm_mode = True

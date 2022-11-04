@@ -17,7 +17,7 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth")
 SECRET_KEY = settings.SECRET_KEY
 ALGORITHM = settings.ALGORITHM
 ACCESS_TOKEN_EXPIRE_MINUTES = settings.ACCESS_TOKEN_EXPIRE_MINUTES
-print("TESTING!!!!!!!!!!!!!!!!!!", settings.ACCESS_TOKEN_EXPIRE_MINUTES)
+
 
 def create_access_token(data: dict):
     to_encode = data.copy()
