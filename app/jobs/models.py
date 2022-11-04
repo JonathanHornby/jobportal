@@ -47,7 +47,16 @@ class JobApplication(Base):
     job_id = Column(Integer, ForeignKey("jobs.id", ondelete="CASCADE"), primary_key=True, nullable=False)
     created_at = Column(TIMESTAMP(timezone=True), nullable=False, server_default=text('now()'))
     recruiter_status = Column(String, nullable=False, server_default='new')
-    cv_path = Column(String)
-    cover_letter_path = Column(String)
+    cv_id = Column(String, ForeignKey("cvs.id", ondelete="CASCADE"))
+    cover_letter_id = Column(String, ForeignKey("cover_letters.id", ondelete="CASCADE"))
+    
+class SavedJob(Base):
+    __tablename__ = 'saved_jobs'
+    
+    user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), primary_key=True, nullable=False)
+    job_id = Column(Integer, ForeignKey("jobs.id", ondelete="CASCADE"), primary_key=True, nullable=False)
+    created_at = Column(TIMESTAMP(timezone=True), nullable=False, server_default=text('now()'))
+    cv_id = Column(Integer, ForeignKey("cvs.id", ondelete="CASCADE"))
+    cover_letter_id = Column(Integer, ForeignKey("cover_letters.id", ondelete="CASCADE"))
     
     

@@ -55,8 +55,8 @@ def create_job(job: schemas.JobCreate, db: Session = Depends(get_db),
     return new_job
 
 
-@router.post("/apply", status_code=status.HTTP_201_CREATED, response_model=schemas.JobApplication)
-def apply_job(job_application: schemas.JobApplication, db: Session = Depends(get_db),
+@router.post("/apply", status_code=status.HTTP_201_CREATED, response_model=schemas.CreateJobApplication)
+def apply_job(job_application: schemas.CreateJobApplication, db: Session = Depends(get_db),
               userid: int = Depends(get_current_user)):
 
     new_application = models.JobApplication(user_id = userid, **job_application.dict())
@@ -70,3 +70,20 @@ def apply_job(job_application: schemas.JobApplication, db: Session = Depends(get
     db.refresh(new_application)
     
     return new_application
+
+
+@router.post("/save", status_code=status.HTTP_201_CREATED, response_model=schemas.CreateSavedJob)
+def save_job(save_job: schemas.CreateSavedJob, db: Session = Depends(get_db),
+              userid: int = Depends(get_current_user)):
+
+    new_saved_job = models.SavedJob(user_id = userid, **save_job.dict())
+    
+    if not new_saved_job:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                            detail=f"Error saving job")
+    
+    db.add(new_saved_job)
+    db.commit()
+    db.refresh(new_saved_job)
+    
+    return new_saved_job

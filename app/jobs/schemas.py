@@ -53,11 +53,21 @@ class JobDetail(JobCreate, JobBasic):
         orm_mode = True
         
 
-class JobApplication(BaseModel):
+class CreateJobApplication(BaseModel):
     recruiter_status: str
     job_id: int
-    cv_path: str
-    cover_letter_path: str
+    cv_id: int
+    cover_letter_id: int
     
     class Config:
         orm_mode = True
+
+
+class CreateSavedJob(BaseModel):
+    job_id: int
+    cv_id: int
+    cover_letter_id: int
+    
+    class Config:
+        orm_mode = True        
+
