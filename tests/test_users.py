@@ -1,11 +1,12 @@
+from app.config import settings
 from app.users import schemas as user_schemas
 from app import utils
 
 
 def test_create_user(client):
     user_data = {
-        "email": "hello124@gmail.com",
-        "password": "password123"
+        "email": settings.TEST_USERNAME,
+        "password": settings.TEST_PASSWORD
     }
     
     res = client.post("/users/", json=user_data)
@@ -28,3 +29,15 @@ def test_get_user(test_user, client):
 
     assert res.json()[0]['email'] == test_user['email']
     assert res.status_code == 200
+    
+    
+def test_delete_user():
+    pass
+
+
+def test_deactivate_user():
+    pass
+
+
+def test_reactivate_user():
+    pass
