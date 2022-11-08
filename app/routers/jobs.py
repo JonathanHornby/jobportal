@@ -14,8 +14,6 @@ router = APIRouter(
 )
 
 
-# TODO: set limit by settings
-#  change search to a search object
 @router.get("/", response_model=List[schemas.JobBasic])
 def get_jobs(db: Session = Depends(get_db), limit: int = 10, skip: int = 0, search: Optional[str] = ""):
     results = db.query(models.Job).limit(10).all()
@@ -36,7 +34,6 @@ def get_job(id: int, db: Session = Depends(get_db)):
     return job
 
 
-# TODO: get recruiter_id from oauth
 @router.post("/", status_code=status.HTTP_201_CREATED, response_model=schemas.JobCreate)
 def create_job(job: schemas.JobCreate, db: Session = Depends(get_db),
             recruiter_id: int = Depends(get_current_recruiter)):

@@ -24,6 +24,8 @@ class Settings(BaseSettings):
     DATABASE_PORT: str = os.environ.get('DATABASE_PORT')
     
     DATABASE_NAME: str = os.environ.get('DATABASE_NAME')
+    
+    TEST_DATABASE_NAME:  str = os.environ.get('TEST_DATABASE_NAME')
 
 
     # OAUTH
@@ -32,5 +34,11 @@ class Settings(BaseSettings):
     ALGORITHM: str = os.environ.get('ALGORITHM')
     
     ACCESS_TOKEN_EXPIRE_MINUTES: int = os.environ.get('ACCESS_TOKEN_EXPIRE_MINUTES')
+    
+    # TEST
+            
+    TEST_USERNAME = "hello124@gmail.com"
+    
+    TEST_PASSWORD = "password123"
 
 settings = Settings()
