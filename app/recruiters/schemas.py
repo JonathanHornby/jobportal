@@ -23,3 +23,10 @@ class RecruiterCreate(RecruiterBase):
 
     class Config:
         orm_mode = True
+        
+class RecruiterCreated(RecruiterBase):
+    id: int
+    password: str
+
+    class Config:
+        orm_mode = True

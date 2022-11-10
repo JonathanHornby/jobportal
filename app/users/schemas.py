@@ -20,6 +20,13 @@ class UserDetail(UserBase):
 
 class UserCreate(UserBase):
     password: str
+
+    class Config:
+        orm_mode = True
+        
+
+class UserCreated(UserBase):
+    password: str
     id: int
 
     class Config:

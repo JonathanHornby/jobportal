@@ -1,6 +1,7 @@
 import pytest
 from sqlalchemy import create_engine
 from app.auth.oauth2 import create_access_token
+from app.auth import schemas as auth_schemas
 from app.main import app
 from app.config import settings
 from sqlalchemy.orm import sessionmaker
@@ -47,7 +48,7 @@ def test_user(client):
     }
     
     res = client.post("/users/", json=user_data)
-    print("TEST", res.json())
+
     assert res.status_code == 201
     
     new_user = res.json()
@@ -72,8 +73,14 @@ def test_recruiter(client):
 
 
 @pytest.fixture
-def token(test_user):
+def user_token(test_user):
     return create_access_token({"user_id": test_user['id']})
+
+
+@pytest.fixture
+def recruiter_token(test_recruiter):
+    return create_access_token({"user_id": test_recruiter['id']})
+
 
 @pytest.fixture
 def authorized_user():
@@ -81,5 +88,10 @@ def authorized_user():
 
 
 @pytest.fixture
-def authorized_recruiter():
-    pass
+def authorized_recruiter(client, recruiter_token):
+    client.headers = {
+        **client.headers,
+        "Authorization": f"Bearer {recruiter_token}"
+    }
+    
+    return client

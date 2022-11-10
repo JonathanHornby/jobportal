@@ -32,7 +32,7 @@ def get_recruiter(id: int, db: Session = Depends(get_db)):
     return recruiter
 
 
-@router.post("/", status_code=status.HTTP_201_CREATED, response_model=schemas.RecruiterCreate)
+@router.post("/", status_code=status.HTTP_201_CREATED, response_model=schemas.RecruiterCreated)
 def create_recruiter(recruiter: schemas.RecruiterCreate, db: Session = Depends(get_db)):
     
     hashed_password = utils.hash(recruiter.password)

@@ -32,7 +32,7 @@ def get_user(id: int, db: Session = Depends(get_db)):
     return user
 
 
-@router.post("/", status_code=status.HTTP_201_CREATED, response_model=schemas.UserCreate)
+@router.post("/", status_code=status.HTTP_201_CREATED, response_model=schemas.UserCreated)
 def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     
     hashed_password = utils.hash(user.password)

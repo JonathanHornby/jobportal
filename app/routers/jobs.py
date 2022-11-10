@@ -34,7 +34,7 @@ def get_job(id: int, db: Session = Depends(get_db)):
     return job
 
 
-@router.post("/", status_code=status.HTTP_201_CREATED, response_model=schemas.JobCreate)
+@router.post("/", status_code=status.HTTP_201_CREATED, response_model=schemas.JobDetail)
 def create_job(job: schemas.JobCreate, db: Session = Depends(get_db),
             recruiter_id: int = Depends(get_current_recruiter)):
 
