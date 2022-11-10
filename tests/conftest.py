@@ -95,3 +95,13 @@ def authorized_recruiter(client, recruiter_token):
     }
     
     return client
+
+
+@pytest.fixture
+def authorized_user(client, user_token):
+    client.headers = {
+        **client.headers,
+        "Authorization": f"Bearer {user_token}"
+    }
+    
+    return client

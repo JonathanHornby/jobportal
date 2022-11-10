@@ -67,7 +67,10 @@ def get_current_recruiter(token: str=Depends(oauth2_scheme), db: Session = Depen
 
     recruiter = db.query(recruiter_models.Recruiter).filter(recruiter_models.Recruiter.id == token.id).first()
 
-    return recruiter.id
+    try:
+        return recruiter.id
+    except:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=f'Could not validate credentials')
 
 
 
