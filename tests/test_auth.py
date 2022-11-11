@@ -22,11 +22,11 @@ def test_login_user(test_user, client):
     assert oauth2.verify_acccess_token(token['access_token'], credentials_exception)
        
 
-def test_incorrect_login(test_user, client):
+def test_incorrect_username(test_user, client):
     
     login_data = {
         "username": "Wrongusername",
-        "password": "Wrongpassword"
+        "password": "password123"
     }
     client.headers['content-type'] = "application/x-www-form-urlencoded"
     
@@ -36,3 +36,15 @@ def test_incorrect_login(test_user, client):
     assert res.status_code == 403
 
 
+def test_incorrect_password(test_user, client):
+    
+    login_data = {
+        "username": "hello124@gmail.com",
+        "password": "Wrongpassword"
+    }
+    client.headers['content-type'] = "application/x-www-form-urlencoded"
+    
+    res = client.post("/auth/login_user", login_data)
+    token = res.json()
+    
+    assert res.status_code == 403
