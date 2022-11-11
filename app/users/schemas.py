@@ -31,3 +31,28 @@ class UserCreated(UserBase):
 
     class Config:
         orm_mode = True
+        
+     
+class CreateCoverLetter(BaseModel):
+    user_id: int
+    name: str
+    
+    class Config:
+        orm_mode = True     
+        
+        
+class CoverLetter(CreateCoverLetter):
+    id: int
+    created_at: datetime
+
+    
+class CVCreate(BaseModel):
+    user_id: int
+    name: str
+    
+    class Config:
+        orm_mode = True
+    
+class CV(CVCreate):
+    id: int
+    created_at: datetime

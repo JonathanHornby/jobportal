@@ -47,11 +47,25 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     return new_user
 
 
-# @router.post("/cv/create")
-# def create_CV():
-#     pass
+@router.post("/cv/", status_code=status.HTTP_201_CREATED, response_model=schemas.CV)
+def create_CV(cv: schemas.CVCreate, db: Session = Depends(get_db)):
+    
+    new_cv = models.Cv(**cv.dict())
+    
+    db.add(new_cv)
+    db.commit()
+    db.refresh(new_cv)
+    
+    return new_cv
     
     
-# @router.post("/coverletter/create")
-# def create_cover_letter():
-#     pass
+@router.post("/coverletter/", status_code=status.HTTP_201_CREATED, response_model=schemas.CoverLetter)
+def create_CV(coverletter: schemas.CreateCoverLetter, db: Session = Depends(get_db)):
+    
+    new_coverletter = models.CoverLetter(**coverletter.dict())
+    
+    db.add(new_coverletter)
+    db.commit()
+    db.refresh(new_coverletter)
+    
+    return new_coverletter
