@@ -60,7 +60,7 @@ def create_CV(cv: schemas.CVCreate, db: Session = Depends(get_db)):
     
     
 @router.post("/coverletter/", status_code=status.HTTP_201_CREATED, response_model=schemas.CoverLetter)
-def create_CV(coverletter: schemas.CreateCoverLetter, db: Session = Depends(get_db)):
+def create_coverletter(coverletter: schemas.CreateCoverLetter, db: Session = Depends(get_db)):
     
     new_coverletter = models.CoverLetter(**coverletter.dict())
     
