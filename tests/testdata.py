@@ -80,3 +80,9 @@ jobs_data = [{
     "perk_bonus": False
 }]
 
+job_application = {
+    "recruiter_status": "active",
+    "job_id": 1,
+    "cv_id": 1,
+    "cover_letter_id": 1
+}

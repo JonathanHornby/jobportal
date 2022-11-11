@@ -45,3 +45,13 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     db.refresh(new_user)
 
     return new_user
+
+
+# @router.post("/cv/create")
+# def create_CV():
+#     pass
+    
+    
+# @router.post("/coverletter/create")
+# def create_cover_letter():
+#     pass

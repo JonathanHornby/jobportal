@@ -129,3 +129,12 @@ def test_jobs(authorized_recruiter, session):
     jobs = session.query(job_models.Job).all()
     return jobs
     
+
+# @pytest.fixture
+# def test_cv():
+#     pass
+
+
+# @pytest.fixture
+# def test_cover_letter():
+#     pass

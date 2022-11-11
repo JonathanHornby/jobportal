@@ -53,11 +53,13 @@ def test_get_job(client, test_jobs):
     
 # TEST APPLY FOR JOB
 
-def test_apply_job():
-    pass
+# def test_apply_job(client, test_user, test_jobs, test_cv, test_cover_letter):
+    
+#     res = client.post("/jobs/apply/", json=testdata.job_application)
+#     new_application = job_schemas.CreateJobApplication(**res.json())
 
 
-# TEST SAVE JOB
+# # TEST SAVE JOB
 
-def test_save_job():
-    pass
+# def test_save_job():
+#     pass
