@@ -1,37 +1,12 @@
 from app.jobs import schemas as job_schemas
-
-job_data = {
-    "title": "First test job",
-    "industry": "Test ",
-    "category": "Test ",
-    "summary": "Test ",
-    "salary_min": 10000,
-    "salary_max": 50000,
-    "product_type": 1,
-    "valid_duration": 30,
-    "company": "Test Company",
-    "country": "Australia",
-    "state": "QLD",
-    "city": "Brisbane",
-    "employment_type": "Test ",
-    "remote_status": "Test ",
-    "salary_currency": "$",
-    "content": "Test ",
-    "contact_name": "Test name",
-    "contact_number": "0491020584",
-    "perk_car": True,
-    "perk_visa": False,
-    "perk_relocation": False,
-    "perk_days_week": 5,
-    "perk_phone": False,
-    "perk_laptop": False,
-    "perk_bonus": False
-}
+from . import testdata
 
 
-def test_post_job_recruiter_valid_token(authorized_recruiter, client):
+# TEST POST JOBS
 
-    res = client.post("/jobs/", json=job_data)
+def test_post_job_recruiter_valid_token(authorized_recruiter):
+
+    res = authorized_recruiter.post("/jobs/", json=testdata.job_data)
     new_job = job_schemas.JobDetail(**res.json())
     
     assert new_job.title == "First test job"
@@ -41,17 +16,48 @@ def test_post_job_recruiter_valid_token(authorized_recruiter, client):
     
 def test_post_job_recruiter_invalid_token(client):
     
-    res = client.post("/jobs/", json=job_data)
+    res = client.post("/jobs/", json=testdata.job_data)
     assert res.status_code == 401
     
     
 def test_post_job_user_valid_token(authorized_user, client):
     
-    res = client.post("/jobs/", json=job_data)
+    res = client.post("/jobs/", json=testdata.job_data)
     assert res.status_code == 401
     
     
 def test_post_job_user_invalid_token(client):
     
-    res = client.post("/jobs/", json=job_data)
+    res = client.post("/jobs/", json=testdata.job_data)
     assert res.status_code == 401
+    
+# TEST GET JOBS
+
+def test_get_jobs(client, test_jobs):
+    
+    res = client.get("/jobs/")
+    jobs = res.json()
+
+    assert len(jobs) == 2
+    assert res.status_code == 200
+    
+    
+def test_get_job(client, test_jobs):
+    
+    res = client.get("/jobs/2")
+    job = job_schemas.JobDetail(**res.json())
+    
+    assert job.id == 2
+    assert job.title == "Second test job"
+    assert res.status_code == 200
+    
+# TEST APPLY FOR JOB
+
+def test_apply_job():
+    pass
+
+
+# TEST SAVE JOB
+
+def test_save_job():
+    pass
