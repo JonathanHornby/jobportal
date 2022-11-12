@@ -54,6 +54,7 @@ class JobDetail(JobCreate, JobBasic):
         
 
 class CreateJobApplication(BaseModel):
+    user_id: int
     recruiter_status: str
     job_id: int
     cv_id: int
@@ -61,7 +62,7 @@ class CreateJobApplication(BaseModel):
     
     class Config:
         orm_mode = True
-
+        
 
 class CreateSavedJob(BaseModel):
     job_id: int

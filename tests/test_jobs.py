@@ -60,13 +60,20 @@ def test_update_job():
 
 def test_delete_job():
     pass    
+
     
 # TEST APPLY FOR JOB
 
-# def test_apply_job(client, test_user, test_jobs, test_cv, test_cover_letter):
+def test_apply_job(authorized_user, test_user, test_jobs, test_cv, test_cover_letter):
     
-#     res = client.post("/jobs/apply/", json=testdata.job_application)
-#     new_application = job_schemas.CreateJobApplication(**res.json())
+    application_data = testdata.job_application
+    application_data['user_id'] = test_user['id']
+    res = authorized_user.post("/jobs/apply", json=application_data)
+
+    new_application = job_schemas.CreateJobApplication(**res.json())
+    
+    assert res.status_code == 201
+    assert new_application.job_id == testdata.job_application['job_id']
 
 
 # # TEST SAVE JOB

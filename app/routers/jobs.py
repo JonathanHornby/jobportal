@@ -56,7 +56,7 @@ def create_job(job: schemas.JobCreate, db: Session = Depends(get_db),
 def apply_job(job_application: schemas.CreateJobApplication, db: Session = Depends(get_db),
               userid: int = Depends(get_current_user)):
 
-    new_application = models.JobApplication(user_id = userid, **job_application.dict())
+    new_application = models.JobApplication(**job_application.dict())
     
     if not new_application:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,

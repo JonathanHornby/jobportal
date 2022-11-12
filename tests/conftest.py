@@ -148,7 +148,7 @@ def test_cv(client, test_user):
 # COVERLETTER
 
 @pytest.fixture
-def test_cover_letter():
+def test_cover_letter(client, test_user):
     coverletter_data = {
         "user_id": test_user['id'],
         "name": "Test Cover Letter"
