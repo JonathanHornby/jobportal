@@ -86,3 +86,4 @@ job_application = {
     "cv_id": 1,
     "cover_letter_id": 1
 }
+

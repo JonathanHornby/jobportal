@@ -17,18 +17,22 @@ def test_create_recruiter(client):
     assert utils.verify_password(recruiter_data['password'], new_recruiter.password)
 
 
-def test_get_users(test_recruiter, client):
+def test_get_recruiter(test_recruiter, client):
     res = client.get("/recruiters/1")
 
     assert res.json()['email'] == test_recruiter['email']
     assert res.status_code == 200
     
     
-def test_get_user(test_recruiter, client):
+def test_get_recruiters(test_recruiter, client):
     res = client.get("/recruiters/")
 
     assert res.json()[0]['email'] == test_recruiter['email']
     assert res.status_code == 200
+
+
+def test_update_recruiter():
+    pass
 
 
 def test_delete_recruiter():

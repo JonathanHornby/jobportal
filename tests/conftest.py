@@ -4,6 +4,8 @@ from app.auth.oauth2 import create_access_token
 from app.auth import schemas as auth_schemas
 from app.jobs.schemas import JobCreate
 from app.jobs import models as job_models
+from app.users import models as user_models
+from app.users import schemas as user_schemas
 from app.main import app
 from app.config import settings
 from sqlalchemy.orm import sessionmaker
@@ -128,13 +130,31 @@ def test_jobs(authorized_recruiter, session):
     
     jobs = session.query(job_models.Job).all()
     return jobs
+
+# CV    
+
+@pytest.fixture
+def test_cv(client, test_user):
+    cv_data = {
+        "user_id": test_user['id'],
+        "name": "Test CV"
+    }
     
+    res = client.post("/users/cv/", json=cv_data)
+    new_cv = user_schemas.CV(**res.json())
+    
+    return new_cv
 
-# @pytest.fixture
-# def test_cv():
-#     pass
+# COVERLETTER
 
-
-# @pytest.fixture
-# def test_cover_letter():
-#     pass
+@pytest.fixture
+def test_cover_letter():
+    coverletter_data = {
+        "user_id": test_user['id'],
+        "name": "Test Cover Letter"
+    }
+    
+    res = client.post("/users/coverletter/", json=coverletter_data)
+    new_coverletter = user_schemas.CoverLetter(**res.json())
+    
+    return new_coverletter

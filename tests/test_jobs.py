@@ -51,6 +51,16 @@ def test_get_job(client, test_jobs):
     assert job.title == "Second test job"
     assert res.status_code == 200
     
+    
+# TEST UPDATE AND DELETE JOBS
+
+def test_update_job():
+    pass
+
+
+def test_delete_job():
+    pass    
+    
 # TEST APPLY FOR JOB
 
 # def test_apply_job(client, test_user, test_jobs, test_cv, test_cover_letter):

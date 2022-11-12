@@ -2,7 +2,7 @@ from app.config import settings
 from app.users import schemas as user_schemas
 from app import utils
 
-# TESTING USERS
+# TEST USERS
 
 def test_create_user(client):
     user_data = {
@@ -32,6 +32,10 @@ def test_get_user(test_user, client):
     assert res.status_code == 200
     
     
+def test_update_user():
+    pass    
+    
+    
 def test_delete_user():
     pass
 
@@ -43,7 +47,7 @@ def test_deactivate_user():
 def test_reactivate_user():
     pass
 
-# TESTING CV
+# TEST CV
 
 def test_create_cv(test_user, client):
     cv_data = {
@@ -64,7 +68,7 @@ def test_delete_cv():
 def test_update_cv():
     pass
 
-# TESTING COVER LETTER
+# TEST COVER LETTER
 
 def test_create_cover_letter(test_user, client):
     coverletter_data = {
