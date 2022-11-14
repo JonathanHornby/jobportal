@@ -4,9 +4,9 @@ from datetime import date, datetime
 from typing import Optional
 
 class UserBase(BaseModel):
-    email: str | None = None
-    name: str | None = None
-    status: str | None = None
+    email: str = None
+    name: str = None
+    status: str = None
     
     class Config:
         orm_mode = True
