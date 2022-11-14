@@ -157,4 +157,4 @@ def test_cover_letter(client, test_user):
     res = client.post("/users/coverletter/", json=coverletter_data)
     new_coverletter = user_schemas.CoverLetter(**res.json())
     
-    return new_coverletter
+    return new_coverletter 
