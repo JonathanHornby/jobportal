@@ -15,25 +15,25 @@ class Settings(BaseSettings):
 
 
     # DATABASE
-    DATABASE_USERNAME: str = os.environ.get('DATABASE_USERNAME')
+    DATABASE_USERNAME: str #= os.environ.get('DATABASE_USERNAME')
     
-    DATABASE_PASSWORD: str = os.environ.get('DATABASE_PASSWORD')
+    DATABASE_PASSWORD: str #= os.environ.get('DATABASE_PASSWORD')
     
-    DATABASE_HOSTNAME: str = os.environ.get('DATABASE_HOSTNAME')
+    DATABASE_HOSTNAME: str #= os.environ.get('DATABASE_HOSTNAME')
     
-    DATABASE_PORT: str = os.environ.get('DATABASE_PORT')
+    DATABASE_PORT: str #= os.environ.get('DATABASE_PORT')
     
-    DATABASE_NAME: str = os.environ.get('DATABASE_NAME')
+    DATABASE_NAME: str #= os.environ.get('DATABASE_NAME')
     
-    TEST_DATABASE_NAME:  str = os.environ.get('TEST_DATABASE_NAME')
+    TEST_DATABASE_NAME: str #= os.environ.get('TEST_DATABASE_NAME')
 
 
     # OAUTH
-    SECRET_KEY: str = os.environ.get('SECRET_KEY')
+    SECRET_KEY: str #= os.environ.get('SECRET_KEY')
     
-    ALGORITHM: str = os.environ.get('ALGORITHM')
+    ALGORITHM: str #= os.environ.get('ALGORITHM')
     
-    ACCESS_TOKEN_EXPIRE_MINUTES: int = os.environ.get('ACCESS_TOKEN_EXPIRE_MINUTES')
+    ACCESS_TOKEN_EXPIRE_MINUTES: int #= os.environ.get('ACCESS_TOKEN_EXPIRE_MINUTES')
     
     # TEST
             
