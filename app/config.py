@@ -25,7 +25,7 @@ class Settings(BaseSettings):
     
     DATABASE_NAME: str #= os.environ.get('DATABASE_NAME')
     
-    TEST_DATABASE_NAME: str #= os.environ.get('TEST_DATABASE_NAME')
+    TEST_DATABASE_NAME: str = "jobsportal_test"
 
 
     # OAUTH
