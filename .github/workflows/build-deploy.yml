@@ -108,6 +108,7 @@ jobs:
           SSH_KEY: ${{ secrets.AWS_EC2_JOBSPORTAL_PRIVATE_KEY }} 
       - name: List home directory
         run: |
+            ls -a
             cd jobsportal
             git pull
             echo ${{secrets.PROD_PASSWORD}} | sudo -S systemctl restart api
