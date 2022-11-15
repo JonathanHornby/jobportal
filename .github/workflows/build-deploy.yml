@@ -42,7 +42,7 @@ jobs:
       - name: install all dependencies
         run: pip install -r requirements.txt
       - name: setup postgres db
-        run: psql -h postgres -U postgres_user -c 'CREATE DATABASE "jobsportal_dev_test";'
+        run: psql -h localhost -U postgres -c 'CREATE DATABASE "jobsportal_dev_test";'
       - name: test with pytest
         run: |
           pip install pytest
