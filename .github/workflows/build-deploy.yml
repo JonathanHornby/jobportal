@@ -108,7 +108,8 @@ jobs:
           SSH_KEY: ${{ secrets.AWS_EC2_JOBSPORTAL_PRIVATE_KEY }} 
       - name: List home directory
         run: |
-            cd app/src
+            mkdir app
+            cd app
             git pull
             echo ${{secrets.PROD_PASSWORD}} | sudo -S systemctl restart api
       # login to our ubuntu
