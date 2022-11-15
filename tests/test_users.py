@@ -87,5 +87,5 @@ def test_delete_cover_letter():
     pass
 
 
-def test_update_cover_letter():
-    pass
+# def test_update_cover_letter():
+#     pass
