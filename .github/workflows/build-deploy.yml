@@ -78,25 +78,40 @@ jobs:
     environment:
       name: production
     steps:
-      - name: pulling git repo
-        uses: actions/checkout@v2
-      - name: deploying to Heroku
-        uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
-        with:
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
-          heroku_email: ${{secrets.HEROKU_EMAIL}}
-
-      # - name: deploy to ubuntu server
-      #   uses: appleboy/ssh-action@master
+    #Deploy to Heroku
+      # - name: pulling git repo
+      #   uses: actions/checkout@v2
+      # - name: deploying to Heroku
+      #   uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
       #   with:
-      #     host: ${{secrets.PROD_HOST}}
-      #     username: ${{secrets.PROD_USERNAME}}
-      #     password: ${{secrets.PROD_PASSWORD}}
-      #     script: |
-      #       cd app/src
-      #       git pull
-      #       echo ${{secrets.PROD_PASSWORD}} | sudo -S systemctl restart api
+      #     heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+      #     heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
+      #     heroku_email: ${{secrets.HEROKU_EMAIL}}
+    #Deploy to AWS Ubuntu
+      - name: Git clone the repository
+        uses: actions/checkout@v3
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_KEY" > ~/.ssh/github-actions-key
+          chmod 600 ~/.ssh/github-actions-key
+          cat >>~/.ssh/config <<END
+          Host ec2
+            HostName $SSH_HOST
+            User $SSH_USER
+            IdentityFile ~/.ssh/github-actions-key
+            StrictHostKeyChecking no
+          END
+        env:
+          SSH_HOST: ${{ env.PROD_HOST }}
+          SSH_USER: ${{ env.PROD_USERNAME }}
+          SSH_KEY: ${{ secrets.AWS_EC2_JOBSPORTAL_PRIVATE_KEY }} 
+      - name: List home directory
+        run: ssh ec2 'ls -la'
+        script: |
+          cd app/src
+          git pull
+          echo ${{secrets.PROD_PASSWORD}} | sudo -S systemctl restart api
       # login to our ubuntu
       # cd /app/src
       # git pull
