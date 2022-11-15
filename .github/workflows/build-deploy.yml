@@ -107,7 +107,6 @@ jobs:
           SSH_USER: ${{ env.PROD_USERNAME }}
           SSH_KEY: ${{ secrets.AWS_EC2_JOBSPORTAL_PRIVATE_KEY }} 
       - name: List home directory
-        run: ssh ec2 'ls -la'
         script: |
           cd app/src
           git pull
