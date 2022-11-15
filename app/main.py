@@ -6,7 +6,7 @@ from .recruiters import models
 from .jobs import models
 from .database.database import engine
 
-models.Base.metadata.create_all(bind=engine)
+#models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
