@@ -107,10 +107,10 @@ jobs:
           SSH_USER: ${{ env.PROD_USERNAME }}
           SSH_KEY: ${{ secrets.AWS_EC2_JOBSPORTAL_PRIVATE_KEY }} 
       - name: List home directory
-        run: |
-          ssh ec2 'cd /home/ubuntu/jobsportal'
-          ssh ec2 'git pull'
-          ssh ec2 'echo ${{secrets.PROD_PASSWORD}} | sudo -S systemctl restart api'
+        run: ssh ec2 'ls -la'
+          # ssh ec2 'cd /home/ubuntu/jobsportal'
+          # ssh ec2 'git pull'
+          # ssh ec2 'echo ${{secrets.PROD_PASSWORD}} | sudo -S systemctl restart api'
       # login to our ubuntu
       # cd /app/src
       # git pull
